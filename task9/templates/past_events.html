@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="past-header">
+    <h1>Прошедшие события</h1>
+    {% if events %}
+        <a href="{{ url_for('delete_all_past') }}" class="btn-danger" onclick="return confirm('Удалить все прошедшие события?')">🗑️ Удалить все прошедшие</a>
+    {% endif %}
+</div>
+
+{% if events %}
+    <div class="events-list">
+        {% for event in events %}
+            <div class="event-card past">
+                <div class="event-header">
+                    <h3>{{ event.title }}</h3>
+                    <div class="event-actions">
+                        <a href="{{ url_for('delete_event', event_id=event.id) }}" class="btn-delete" onclick="return confirm('Удалить событие?')">🗑️</a>
+                    </div>
+                </div>
+                <div class="event-datetime">
+                    🕒 {{ event.start_datetime.strftime('%d.%m.%Y %H:%M') }} — {{ event.end_datetime.strftime('%d.%m.%Y %H:%M') }}
+                </div>
+                {% if event.location %}
+                    <div class="event-location">📍 {{ event.location }}</div>
+                {% endif %}
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div class="empty-state">Нет прошедших событий</div>
+{% endif %}
+{% endblock %}

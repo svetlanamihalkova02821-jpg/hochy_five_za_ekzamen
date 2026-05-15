@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ title }}</h1>
+
+<form method="POST" class="event-form">
+    {{ form.hidden_tag() }}
+
+    <div class="form-group">
+        {{ form.title.label }}
+        {{ form.title(class="form-control") }}
+        {% for error in form.title.errors %}
+            <span class="error">{{ error }}</span>
+        {% endfor %}
+    </div>
+
+    <div class="form-row">
+        <div class="form-group">
+            {{ form.start_datetime.label }}
+            {{ form.start_datetime(class="form-control", type="datetime-local") }}
+        </div>
+
+        <div class="form-group">
+            {{ form.end_datetime.label }}
+            {{ form.end_datetime(class="form-control", type="datetime-local") }}
+        </div>
+    </div>
+
+    <div class="form-group">
+        {{ form.location.label }}
+        {{ form.location(class="form-control") }}
+    </div>
+
+    <div class="form-group">
+        {{ form.description.label }}
+        {{ form.description(class="form-control", rows="4") }}
+    </div>
+
+    <div class="form-actions">
+        <a href="{{ url_for('index') }}" class="btn-secondary">Отмена</a>
+        {{ form.submit(class="btn-success") }}
+    </div>
+</form>
+{% endblock %}
